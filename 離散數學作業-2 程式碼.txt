@@ -1,0 +1,118 @@
+//有查資料
+import java.util.Scanner;
+import java.util.Stack;
+
+public class math2 {
+	static char[] Postfix(char[] charArray) { // 後序
+		StringBuffer sb = new StringBuffer();
+		Stack<Character> stack = new Stack<Character>(); // 建立堆疊
+		char inputChar; // 輸入的字元
+		
+		for (int i = 0; i < charArray.length; i++) {
+			inputChar = charArray[i];
+			if (Character.isDigit(inputChar)) { // 如果輸入進來的是十進位數字則TRUE
+				sb.append(inputChar); // 儲存
+			} else if (inputChar == '(') { // 碰到左括號push
+				stack.push(inputChar);
+			} else if (inputChar == ')') { // 碰到右括號時 若stack.peek()不是 左括號 就一直pop()出來
+				while (stack.peek() != '(') {
+					sb.append(stack.pop());
+				}
+				stack.pop(); // 拿出 (
+			} else { // 遇到符號
+				while (true) {
+					if (stack.empty()) { // 堆疊是空的就直接把符號push出去
+						stack.push(inputChar);
+						break;
+					} else {
+						if (Priority(inputChar) <= Priority(stack.peek())) { // 優先順序 做比較
+							// peek 取堆疊最上面的元素
+							sb.append(stack.pop()); // 如果輸入的優先順序小於stack.peek()就pop
+						} else {
+							stack.push(inputChar); // 如果輸入的優先順序大於stack.peek()就push
+							break;
+						}
+					}
+				}
+			}
+		}
+		while (!stack.empty()) { // 將剩下在堆疊裡的element都拿出來
+			sb.append(stack.pop());
+		}
+		return sb.toString().toCharArray();
+	}
+
+	static int Priority(char c) { // 運算子優先順序
+		switch (c) {
+		case '^':
+			return 1;
+		case 'v':
+			return 2;
+		default:
+			return 0;
+		}
+	}
+
+	// half
+	static int Calcu(char[] charArray) { // 開始運算後序
+		Stack<Integer> stack = new Stack<Integer>();
+		char token;
+		for (int i = 0; i < charArray.length; i++) {
+			token = charArray[i];
+			if (Character.isDigit(token)) { // 如果輸入進來的是十進位數字直接push
+				stack.push(Integer.parseInt(String.valueOf(charArray[i]))); // 轉型
+			} else { // 是運算子
+				stack.push(returnCal(stack.pop(), stack.pop(), token)); // 彈出數字做運算處理
+			}
+		}
+		return stack.pop();
+	}
+
+	static int returnCal(int i, int j, char operator) {
+		// 處理運算子 處理完以後回傳
+		// System.out.println(i+" "+j);
+		switch (operator) {
+		case '^':
+			return i & j;
+		case 'v':
+			return i | j;
+		case '→': // imply
+			if (i == 0 & j == 1) {
+				return 0;
+			} else {
+				return 1;
+			}
+		}
+		return 0;
+	}
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		StringBuffer sb = new StringBuffer(); // 使用SB儲存才能繼續引用
+		System.out.print("請輸入邏輯式："); //  p q r
+		// 0^0v0 =0 1^1v0 = 1
+		char[] charArray;
+		while (sc.hasNext()) { // 不斷輸入
+			charArray = sc.nextLine().toCharArray(); // 把輸入的字串轉成陣列字元 方便切割
+
+			for (int i = 0; i < charArray.length; i++) {
+				if (Character.isWhitespace(charArray[i])) { // 把空白 TAB 換行都去掉
+					continue; // 有空白TAB換行的都跳過
+				} else {
+					sb.append(charArray[i]); // 最後儲存在陣列裡面
+				}
+			}
+			// 1^0 = 0 
+			// 1^1 = 1
+			// 1v0 = 1
+			// 1v1 = 1
+			// 1→0 = 0 else 1
+			// 01v = 1
+			// 11^ = 1
+			// 0^0v0 =0 1^1v0 = 1
+			System.out.println("真假值為："+Calcu(Postfix(sb.toString().toCharArray()))); // 把字串丟入
+
+		}
+	}
+}
+// ab^ 11^ 00^

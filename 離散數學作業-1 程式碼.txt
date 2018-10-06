@@ -1,0 +1,30 @@
+# -*- coding: cp950 -*-
+#(p^q) imply(->) ~r
+print("計算 (p^q) imply ~r 的真假值")
+p = input("輸入p值:")
+q = input("輸入q值:")
+r = input("輸入r值:")
+
+pq = p and q
+
+if(r == 1):
+    r=0
+else:
+    r=1
+    
+ans = not(pq) or r
+
+if("True" in str(ans)):
+    ans = 1
+
+print "答案為:"+str(ans)
+
+##輸入p值:1
+##輸入q值:1
+##輸入r值:1
+##答案為:0
+
+##輸入p值:1
+##輸入q值:1
+##輸入r值:0
+##答案為:1

@@ -1,0 +1,50 @@
+import java.util.Scanner;
+
+public class Route {
+public static void main(String[]argv) {
+	Scanner sc = new Scanner(System.in);
+	System.out.print("輸入x1 y1:");
+	int x1 = sc.nextInt();
+	int y1 = sc.nextInt();
+	System.out.print("輸入x2 y2:");
+	int x2 = sc.nextInt();
+	int y2= sc.nextInt();
+	
+	int x = x2-x1;
+	int y = y2-y1;
+	int count;
+	
+	//方法數
+	if(x-y >0) {
+		count=y;
+	}else {
+		count=x;
+	}
+	
+	System.out.println(x+" "+y);
+	
+//	System.out.println(floor(x+y)/(floor(x)*floor(y)));
+	
+	for(int i=0;i<=count;i++) {
+//		System.out.println(i);
+		System.out.printf("往右走%d步 往上走%d步 往右上走%d步：總共有 %d種方法\n",x,y,i,(floor(x+y+i))/((floor(x)*floor(y)*floor(i))));
+//		System.out.println(x+y+i);
+//		System.out.println((floor(x)*floor(y)*floor(i)));
+//		System.out.println(x+" "+y);
+		x--;
+		y--;
+	}
+	
+//	System.out.println(x+" "+y+" "+j);
+	
+}
+	static int floor(int n) {
+		int sum = 1;
+		while(n >= 1) {
+			sum *=n;
+			n--;
+		}
+		return sum;
+	}
+	
+}

@@ -1,0 +1,71 @@
+import java.io.*;
+public class math4 {
+	public static void Permutations(char[] cha, int i) {
+	    if (i >= cha.length) //i大於字串長度就跳出
+	        return;
+	    if (i == cha.length - 1) { //
+	        System.out.println(String.valueOf(cha)); //轉型印出
+	    } else {
+	        for (int j = i; j < cha.length; j++) { //0  0<2 0++
+	            char temp = cha[j]; //泡泡排序法 交換位置(排列組合) temp = cha[0]
+	            cha[j] = cha[i]; // cha[0] = cha[0]
+	            cha[i] = temp;   // cha[0] = temp  // 先換位置  
+	            
+	            
+//	            System.out.println(cha);
+	            Permutations(cha, i + 1); //遞迴 (cha,0+1) 
+//
+	            temp = cha[j]; //temp = cha[0] 
+	            cha[j] = cha[i]; // cha[0] = cha[0]
+	            cha[i] = temp;   // cha[0] = temp
+	        }
+	   
+	}
+	}
+public static void main(String[]argv) throws Exception{
+	//CSIESIE
+	
+	char [] charArray = {'C','S','I','E','S','I','E'};
+	int numerator = 1; //分子
+	int denominator = 1; //分母
+	int count = 0;
+	for(int i=charArray.length;i>0;i--) { //總長度階層
+		numerator *=i;
+	}
+	
+	for(int i = 0;i<charArray.length;i++) {
+		for(int j = 0;j<charArray.length;j++) {
+//			System.out.print("i = "+charArray[i]+", j = "+charArray[j]);
+//			System.out.println();
+			if(charArray[i] == charArray[j] ) {
+				count++;
+				if(count == 2)
+				{
+					for(int k = count;k>0;k--) {
+						denominator *= k;
+					}
+					count = 0;
+				}
+				break;
+				
+//              C,C
+//				S,S
+//				I,I
+//				E,E
+//				S,S
+//				I,I
+//				E,E
+				
+			}
+			
+		}
+		
+	}
+	
+	System.out.println("CSIESIE"+ " 共 "+numerator/denominator+" 種排法");
+	
+	Permutations(charArray,0);
+	
+	
+}
+}

@@ -1,0 +1,29 @@
+# -*- coding: cp950 -*-
+from decimal import Decimal
+
+print "----輸出 n 使滿足 C n+19 取 20 得答案是 230230----\n"
+
+
+def n_floor(n):
+    total = 1
+    while(n>=1):
+        total = total*n
+        n = n-1
+
+    return total
+
+def mn_floor(n,m):
+    return n_floor(m) * n_floor(n-1)
+
+
+##print n_floor(26)
+
+total = 1
+n = 1
+while(total != 230230):
+    total = Decimal(n_floor(n+19)) / Decimal(mn_floor(7,20))
+    print ("當n="+str(n)+"時 C n+19取20為"+str(total))
+    if(total != 230230):
+        n+=1
+
+print n
