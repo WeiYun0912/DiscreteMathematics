@@ -1,0 +1,27 @@
+# -*- coding: cp950 -*-
+# 367人在同房間內 必有2個人是同天出生 367 = 100%
+# 50% = 2x
+from decimal import Decimal
+
+Percent = float(input("請輸入機率(%):"))
+ans = 0
+
+
+
+for i in range(1,367):  #假設367人在同一個房間 
+    num = float(1)
+    for j in range(364):
+        if(j>=365-i+1): 
+            j = j-1
+            num *=(float(j)/float(365)) #把分子分母先處理數字就不會overflow
+##            print num
+    if((1-num)*100>Percent):
+##        print int(i)
+        ans = int(i)
+##        print ans
+        break
+    elif(Percent == 100):
+        ans = 367
+        break
+
+print "當人數達"+str(ans)+"人時 兩人生日相同機率為"+str(Percent)+"%"

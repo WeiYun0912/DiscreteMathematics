@@ -1,0 +1,31 @@
+import java.util.Scanner;
+
+public class coprime {
+public static void main(String[]argv) {
+	Scanner sc = new Scanner(System.in);
+	System.out.print("請輸入n:");
+	int n = sc.nextInt();
+	System.out.println(coprime_count(n));
+}
+	static int coprime_count(int n) {
+		int count =0;
+		for(int i=0;i<n;i++) { 
+			if(Euclid(n,i) == 1) { //把n和i帶進輾轉相裡面  回傳1代表 n和i 互質(最大公因數為1)
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	static int Euclid(int n,int m) { //輾轉相除法 
+		
+		int r =1;
+		while(n!=0) {
+			r = m%n;
+			m = n;
+			n = r;
+		}
+		return m;
+	}
+	
+}

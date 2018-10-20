@@ -1,0 +1,35 @@
+
+
+public class Intsplit {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("請輸入一個數字: ");
+		int num = sc.nextInt();
+		int total = partition(num);
+		System.out.println("共:" + total + "種");
+	}
+
+	public static int partition(int num) {
+		return partition(num, num, "");
+	}
+
+	public static int partition(int num1, int num2, String ansStr) {
+		if (num1 == 0) {
+			System.out.println(ansStr);
+			return 1;
+		}
+
+		int ansNum = 0;
+		int index = 0;
+		if (num1 > num2) {
+			index = num2;
+		} else {
+			index = num1;
+		}
+
+		for (int i = index; i >= 1; i--) { // 3 3>=0 3--
+				ansNum += partition(num1 - i, i, ansStr + " " + i);
+		}
+		return ansNum;
+	}
+}

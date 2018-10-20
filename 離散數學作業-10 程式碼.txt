@@ -1,0 +1,83 @@
+import java.io.*;
+import java.util.Scanner;
+
+public class not_position {
+	static int total = 0; //計算最後有幾個數字是不在正確位置上的
+	public static void Permutations(char[] cha, int i) {
+		if (i >= cha.length) // i大於字串長度就跳出
+			return;
+		if (i == cha.length - 1) { //
+			int count = 0;
+			
+			for (int j = 0; j < cha.length; j++) {
+
+				// System.out.println(String.valueOf(k).toCharArray()[0]);
+				// char c = (char) k;
+				/*
+				 * if n = 4 c = 1 = 2 = 3 = 4
+				 * 
+				 */
+				char c = String.valueOf((j + 1)).toCharArray()[0]; // 位置足標
+				// System.out.println(cha[j]+" "+c);
+				// System.out.println();
+
+				if (cha[j] != c) { 
+					count++;
+				}
+
+				if (count == cha.length) {
+					System.out.println(cha);
+					total+=1;
+				}
+
+			}
+			// System.out.println();
+			// if(cha[0] != '1' & cha[1] != '2' & cha[2] !='3' & cha[3] !='4') {
+			// System.out.println(cha);
+			// }
+
+		} else {
+			
+			for (int j = i; j < cha.length; j++) { // 0 0<2 0++
+				char temp = cha[j]; // 泡泡排序法 交換位置(排列組合) temp = cha[0]
+				cha[j] = cha[i]; // cha[0] = cha[0]
+				cha[i] = temp; // cha[0] = temp // 先換位置
+
+				// System.out.println(cha);
+				
+				Permutations(cha, i + 1); // 遞迴 (cha,0+1)
+				//
+				temp = cha[j]; // temp = cha[0]
+				cha[j] = cha[i]; // cha[0] = cha[0]
+				cha[i] = temp; // cha[0] = temp
+			}
+
+		}
+		
+	}
+
+	public static void main(String[] argv) throws Exception {
+
+		Scanner sc = new Scanner(System.in);
+		System.out.print("請輸入n:");
+		int n = sc.nextInt();
+		
+		
+		String str = "";
+		for (int i = 1; i <= n; i++) {
+			str += i;
+		}
+
+		// System.out.println(str);
+		
+		char[] charArray = str.toCharArray();
+		// 把位數轉乘字元陣列
+		// 1 = 1
+		// 2 = 1 2
+		// 3 = 1 2 3
+		// 4 = 1 2 3 4
+		
+		Permutations(charArray, 0);
+		System.out.println(n+" 共有 "+total+" 種方法數 使每數都不在正確位置");
+	}
+}

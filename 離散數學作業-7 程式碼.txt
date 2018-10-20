@@ -1,0 +1,19 @@
+public class Increase {
+public static void main(String[]argv) {
+	//1<=X1<=X2<=X3<=X4<=9 H(9,4) = C(12,4)
+	System.out.println("四位整數共"+((2*C(12,4)-9)+(C(12,3)-1))+"種為非遞增或非遞減"); 
+	//1111 2222 3333 ... 9999 會重複 所以扣掉9個
+	//扣掉0000的情形 -1
+}
+static int C(int n,int r) {
+	return (floor(n))/((floor(r)*(floor(n-r))));
+}
+static int floor(int n) {
+	int sum = 1;
+	while(n > 1) {
+		sum*=n;
+		n--;
+	}
+	return sum;
+}
+}
